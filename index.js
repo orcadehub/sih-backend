@@ -7,7 +7,19 @@ const MONGO_URI = process.env.MONGO_URI;
 const PORT = process.env.PORT || 3300;
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3000",
+      "https://sih-mlew.vercel.app/",
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
+
+app.options("*", cors()); // Handle preflight requests for all routes
 
 // JSON middleware for Express
 app.use(express.json());
